@@ -2,13 +2,31 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
+	
 	public function index(){
-		$data = D('Common/Images')->select();
+		$tag = I('tag');
+		if($tag){
+			$data = D('Common/Images')->where(array('tags'=>$tag))->order('time desc')->select();
+		}else{
+			$data = D('Common/Images')->order('time desc')->select();			
+		}
 		$this->data = $data;
+		$this->tags = $this->gettags();
 		$this->display();
 	}
 
+	public function gettags(){
+		$tags = D('Common/Images')->field('tags')->select();
+		$t = array();
+		foreach ($tags as $key => $value) {
+			$t = array_merge($t,$value['tags']);
+		}
+		$t = array_unique($t);
+		return $t;
+	}
+
 	public function add(){
+		$this->tags = $this->gettags();
 		$this->display();
 	}
 

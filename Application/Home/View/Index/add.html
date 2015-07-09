@@ -20,6 +20,13 @@
 			<a class="fa fa-tags" href="javascript:;"></a>
 			<a class="fa fa-plus" href="{:U('add')}"></a>
 		</div>
+		<div class="nav_tags">
+			<div class="nav_tagss wraper">
+				<volist id="vt" name="tags">
+				<a href="{:U('index',array('tag'=>$vt))}" class="tags">{$vt}</a>
+				</volist>
+			</div>
+		</div>
 	</div>
 
 	<div class="article">
