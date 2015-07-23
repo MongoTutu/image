@@ -65,7 +65,7 @@ class IndexController extends Controller {
 			$img['thumb'] = 's_'.$img['savename'];
 			$img['time'] = time();
 			$img['dir'] = 'images/';
-			$servername = 'http://images.zhangtutu.club';
+			$servername = 'http://121.42.157.21/images/';
 			$img['servername'] = $servername;
 			$img['img_url'] = $servername.'/'.$res['path'];
 			$img['thumb_url'] = $servername.'/'.$img['savepath'].'s_'.$img['savename'];
