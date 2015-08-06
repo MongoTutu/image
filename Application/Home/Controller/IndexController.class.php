@@ -15,6 +15,19 @@ class IndexController extends Controller {
 		$this->display();
 	}
 
+	public function change_ip(){
+		die;
+		$servername = 'http://121.42.157.21/';
+		$data = D('Common/Images')->select();
+		foreach($data as $k=>$v){
+			$data[$k]['img_url'] = $servername.$v['dir'].$v['savepath'].$v['savename'];
+			$data[$k]['thumb_url'] = $servername.$v['dir'].$v['savepath'].'s_'.$v['savename'];
+			$data[$k]['servername'] = $servername;
+			D('Common/Images')->where(array('_id'=>$v['_id']))->data($data[$k])->save();
+		}
+		dump($data);
+	}
+
 	public function gettags(){
 		$tags = D('Common/Images')->field('tags')->select();
 		$t = array();
