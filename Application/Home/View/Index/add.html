@@ -13,21 +13,8 @@
 <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div class="header">
-		<a class="logo" href="{:U('index')}">KStart</a>
-		<div class="wraper nav">
-			<a class="fa fa-navicon" href="{:U('index')}"></a>
-			<a class="fa fa-tags" href="javascript:;"></a>
-			<a class="fa fa-plus" href="{:U('add')}"></a>
-		</div>
-		<div class="nav_tags">
-			<div class="nav_tagss wraper">
-				<volist id="vt" name="tags">
-				<a href="{:U('index',array('tag'=>$vt))}" class="tags">{$vt}</a>
-				</volist>
-			</div>
-		</div>
-	</div>
+
+<include file="header" />
 
 	<div class="article">
 		<div class="wraper">
@@ -36,7 +23,15 @@
 				<input name="tags" id="tags" value="" />				
 			</div>
 			<div class="form-group">
-				<input type="file" name="image" id="">
+				<input type="text" name="classify" style="width: 60%;height:30px;padding-left:5px;" placeholder="分类名（用于素材类别区分）" id="classify">
+				<div class="sc">
+					<a href="javascript:void(0);">TMT</a>
+					<a href="javascript:void(0);">TMT</a>				
+					<a href="javascript:void(0);">TMT</a>				
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="file" name="image">
 			</div>
 			<div class="form-group">
 				<input class="submitBtn" type="submit" value="提交">
@@ -59,6 +54,10 @@ $(function(){
 		'removeWithBackspace' : true,
 		'placeholderColor' : '#666666'
 	});
+	$('.sc a').on('click',function(){
+		var t = $(this).text();
+		$('#classify').val(t);
+	})
 });
 </script>
 <script type="text/javascript" src="__PUBLIC__/js/require.js" data-main="__PUBLIC__/js/main"></script>

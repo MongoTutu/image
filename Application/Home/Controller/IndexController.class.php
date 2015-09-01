@@ -5,11 +5,25 @@ class IndexController extends Controller {
 	
 	public function index(){
 		$tag = I('tag');
+		$p = I('p') ? intval(I('p')) : 1;
+		$limit = 30;
 		if($tag){
-			$data = D('Common/Images')->where(array('tags'=>$tag))->order('time desc')->select();
+			$data = D('Common/Images')->where(array('tags'=>$tag))->order('time desc')->page($p.','.$limit)->select();
+			$count = D('Common/Images')->where(array('tags'=>$tag))->count();
 		}else{
-			$data = D('Common/Images')->order('time desc')->select();			
+			$data = D('Common/Images')->order('time desc')->page($p.','.$limit)->select();
+			$count = D('Common/Images')->count();
 		}
+		$Page = new \Think\Page($count,$limit);
+		$show = $Page->show();
+		$this->page = $show;
+		$this->data = $data;
+		$this->tags = $this->gettags();
+		$this->display();
+	}
+
+	public function image(){
+		$data = D('Common/Images')->order('time desc')->where(array('sc'=>1))->select();
 		$this->data = $data;
 		$this->tags = $this->gettags();
 		$this->display();
@@ -45,6 +59,7 @@ class IndexController extends Controller {
 
 	public function upload_images(){
 		$t = I('tags');
+		$classify = I('classify');
 		if(!$t){
 			$this->error('没有标签');
 		}
@@ -68,7 +83,11 @@ class IndexController extends Controller {
 			if(!is_array($t)){$t = array();}
 			$t = array_unique(array_merge($tag,$t));
 			
-			$img['tags'] = $t;			
+			$img['tags'] = $t;
+			if($classify){
+				$img['sc'] = 1;
+				$img['classify'] = $classify;
+			}
 			$res['path'] = $img['savepath'].$img['savename'];
 			
 			$image = new \Think\Image(); 
@@ -80,8 +99,8 @@ class IndexController extends Controller {
 			$img['dir'] = 'images/';
 			$servername = 'http://121.42.157.21/images/';
 			$img['servername'] = $servername;
-			$img['img_url'] = $servername.'/'.$res['path'];
-			$img['thumb_url'] = $servername.'/'.$img['savepath'].'s_'.$img['savename'];
+			$img['img_url'] = $servername.$res['path'];
+			$img['thumb_url'] = $servername.$img['savepath'].'s_'.$img['savename'];
 			
 			$images = D('Common/Images');
 			$rs = $images->data($img)->add();
