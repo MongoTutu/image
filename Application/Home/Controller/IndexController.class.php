@@ -57,6 +57,11 @@ class IndexController extends Controller {
 		$this->display();
 	}
 
+	public function add_2(){
+		$this->tags = $this->gettags();
+		$this->display();
+	}
+
 	public function upload_images(){
 		$t = I('tags');
 		$classify = I('classify');
@@ -107,6 +112,49 @@ class IndexController extends Controller {
 			if($rs){
 				$this->success('Success');
 			}
+		}
+	}
+
+	public function upload_images_2(){
+		$classify = I('classify');
+		if(!$classify){
+			header('HTTP/1.1 404 NOT FOUND');
+			return false;
+		}
+		$config = array(
+			'maxSize'    =>    3145728,
+			'rootPath'   =>    '../images/',
+			'savePath'   =>    '',
+			'saveName'   =>    array('uniqid',''),
+			'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
+			'autoSub'    =>    true,
+			'subName'    =>    array('date','Ymd'),
+		);
+		$upload = new \Think\Upload($config);
+		$info   =   $upload->upload();
+		if(!$info) {
+			$this->error($upload->getError());
+		}else{
+			$img = $info['Filedata'];
+			$img['sc'] = 1;
+			$img['classify'] = $classify;
+			
+			$res['path'] = $img['savepath'].$img['savename'];
+			
+			$image = new \Think\Image(); 
+			$image->open($config['rootPath'].$res['path']);
+			$image->thumb(375,1000000)->save($config['rootPath'].$img['savepath'].'s_'.$img['savename']);
+			
+			$img['thumb'] = 's_'.$img['savename'];
+			$img['time'] = time();
+			$img['dir'] = 'images/';
+			$servername = 'http://121.42.157.21/images/';
+			$img['servername'] = $servername;
+			$img['img_url'] = $servername.$res['path'];
+			$img['thumb_url'] = $servername.$img['savepath'].'s_'.$img['savename'];
+			
+			$images = D('Common/Images');
+			$rs = $images->data($img)->add();
 		}
 	}
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content ="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="blank">
+<meta name="format-detection" content="telephone=no">
+<title>Images</title>
+<link rel="stylesheet" href="__PUBLIC__/css/app.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="__PUBLIC__/uploadify/uploadify.css">
+</head>
+<body>
+
+<include file="header" />
+
+	<div class="article">
+		<div class="wraper">
+			<div class="form-group">
+				<input type="text" name="classify" style="width: 60%;height:30px;padding-left:5px;" placeholder="分类名（用于素材类别区分）" id="classify" value="{$_GET['classify']}">
+				<div class="sc">
+					<a class="tags" href="{:U('add_2',array('classify'=>'医疗保健'))}">医疗保健</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'非必需消费品'))}">非必需消费品</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'生物科技'))}">生物科技</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'商品'))}">商品</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'金融'))}">金融</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'电信服务'))}">电信服务</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'商业及专业服务'))}">商业及专业服务</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'清洁技术'))}">清洁技术</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'通信'))}">通信</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'互联网'))}">互联网</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'IT和企业软件'))}">IT和企业软件</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'生命科学'))}">生命科学</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'半导体'))}">半导体</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'杂项技术'))}">杂项技术</a>
+					<a class="tags" href="{:U('add_2',array('classify'=>'公用事业'))}">公用事业</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="file" id="file_upload" name="file">
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.sc a').on('click',function(){
+		var t = $(this).text();
+		$('#classify').val(t);
+	});
+	
+	$('#file_upload').uploadify({
+		height : 30,
+		width : 120,
+		formData : {'classify' : $('#classify').val()},
+		fileTypeExts : '*.jpg;*.jpeg;*.gif;*.png',
+		swf : '__PUBLIC__/uploadify/uploadify.swf',
+		uploader : '{:U("upload_images_2")}',
+		onUploadStart : function(file){
+			var classify = $('#classify').val();
+			if(!classify){
+				alert('classify empty');
+				return false;
+			}
+		},
+	});
+
+});
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/require.js" data-main="__PUBLIC__/js/main"></script>
+</html>
