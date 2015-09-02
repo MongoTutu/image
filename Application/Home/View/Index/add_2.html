@@ -19,7 +19,11 @@
 	<div class="article">
 		<div class="wraper">
 			<div class="form-group">
-				<input type="text" name="classify" style="width: 60%;height:30px;padding-left:5px;" placeholder="分类名（用于素材类别区分）" id="classify" value="{$_GET['classify']}">
+				<form method="get" action="{:U('add_2')}">
+				<input type="text" name="classify" style="width: 50%;height:30px;padding-left:5px;" placeholder="分类名（用于素材类别区分）" id="classify" value="{$_GET['classify']}">
+				<input type="submit" value="Submit">
+				<p>手动输入的类别请提交之后再上传文件</p>
+				</form>
 				<div class="sc">
 					<a class="tags" href="{:U('add_2',array('classify'=>'医疗保健'))}">医疗保健</a>
 					<a class="tags" href="{:U('add_2',array('classify'=>'非必需消费品'))}">非必需消费品</a>
