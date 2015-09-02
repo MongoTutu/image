@@ -23,6 +23,26 @@
 				<input name="tags" id="tags" value="" />				
 			</div>
 			<div class="form-group">
+				<input type="text" name="classify" style="width: 60%;height:30px;padding-left:5px;" placeholder="分类名（用于素材类别区分）" id="classify">
+				<div class="sc">
+					<a class="tags" href="javascript:;">医疗保健</a>
+					<a class="tags" href="javascript:;">非必需消费品</a>
+					<a class="tags" href="javascript:;">生物科技</a>
+					<a class="tags" href="javascript:;">商品</a>
+					<a class="tags" href="javascript:;">金融</a>
+					<a class="tags" href="javascript:;">电信服务</a>
+					<a class="tags" href="javascript:;">商业及专业服务</a>
+					<a class="tags" href="javascript:;">清洁技术</a>
+					<a class="tags" href="javascript:;">通信</a>
+					<a class="tags" href="javascript:;">互联网</a>
+					<a class="tags" href="javascript:;">IT和企业软件</a>
+					<a class="tags" href="javascript:;">生命科学</a>
+					<a class="tags" href="javascript:;">半导体</a>
+					<a class="tags" href="javascript:;">杂项技术</a>
+					<a class="tags" href="javascript:;">公用事业</a>
+				</div>
+			</div>
+			<div class="form-group">
 				<input type="file" name="image">
 			</div>
 			<div class="form-group">
@@ -46,6 +66,10 @@ $(function(){
 		'removeWithBackspace' : true,
 		'placeholderColor' : '#666666'
 	});
+	$('.sc a').on('click',function(){
+		var t = $(this).text();
+		$('#classify').val(t);
+	})
 });
 </script>
 <script type="text/javascript" src="__PUBLIC__/js/require.js" data-main="__PUBLIC__/js/main"></script>
