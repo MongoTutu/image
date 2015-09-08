@@ -11,8 +11,8 @@ class IndexController extends Controller {
 			$data = D('Common/Images')->where(array('tags'=>$tag))->order('time desc')->page($p.','.$limit)->select();
 			$count = D('Common/Images')->where(array('tags'=>$tag))->count();
 		}else{
-			$data = D('Common/Images')->order('time desc')->page($p.','.$limit)->select();
-			$count = D('Common/Images')->count();
+			$data = D('Common/Images')->order('time desc')->where(array('sc'=>array('NEQ',1)))->page($p.','.$limit)->select();
+			$count = D('Common/Images')->where(array('sc'=>array('NEQ',1)))->count();
 		}
 		$Page = new \Think\Page($count,$limit);
 		$show = $Page->show();
@@ -23,7 +23,13 @@ class IndexController extends Controller {
 	}
 
 	public function image(){
-		$data = D('Common/Images')->order('time desc')->where(array('sc'=>1))->select();
+		$p = I('p') ? intval(I('p')) : 1;
+		$limit = 30;
+		$data = D('Common/Images')->order('time desc')->where(array('sc'=>1))->page($p.','.$limit)->select();
+		$count = D('Common/Images')->where(array('sc'=>1))->count();
+		$Page = new \Think\Page($count,$limit);
+		$show = $Page->show();
+		$this->page = $show;
 		$this->data = $data;
 		$this->tags = $this->gettags();
 		$this->display();
