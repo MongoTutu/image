@@ -31,7 +31,7 @@ class IndexController extends Controller {
 
 	public function change_ip(){
 		die;
-		$servername = 'http://121.42.157.21/';
+		$servername = SERVER_IP;
 		$data = D('Common/Images')->select();
 		foreach($data as $k=>$v){
 			$data[$k]['img_url'] = $servername.$v['dir'].$v['savepath'].$v['savename'];
@@ -46,7 +46,22 @@ class IndexController extends Controller {
 		$tags = D('Common/Images')->field('tags')->select();
 		$t = array();
 		foreach ($tags as $key => $value) {
-			$t = array_merge($t,$value['tags']);
+			if($value['tags']){
+				$t = array_merge($t,$value['tags']);
+			}
+		}
+		$ts = array();
+		foreach($t as $k=>$v){
+			$ts[$v] ++;
+		}
+		arsort($ts);
+		$ts = array_keys($ts);
+		$t = array();
+		for($i=0;$i<40;$i++){
+			if(!$ts[$i]){
+				continue;
+			}
+			$t[] = $ts[$i];
 		}
 		$t = array_unique($t);
 		return $t;
@@ -60,9 +75,10 @@ class IndexController extends Controller {
 	public function upload_images(){
 		$t = I('tags');
 		$classify = I('classify');
-		if(!$t){
+		if(!$t && !$classify){
 			$this->error('没有标签');
 		}
+
 		$config = array(
 			'maxSize'    =>    3145728,
 			'rootPath'   =>    '../images/',
@@ -77,33 +93,33 @@ class IndexController extends Controller {
 		if(!$info) {
 			$this->error($upload->getError());
 		}else{
-			$img = $info['image'];
-			
-			$tag = explode(',', $t);
-			if(!is_array($t)){$t = array();}
-			$t = array_unique(array_merge($tag,$t));
-			
-			$img['tags'] = $t;
-			if($classify){
-				$img['sc'] = 1;
-				$img['classify'] = $classify;
+			$tag = multi_explode(array(',','，'),$t);
+	
+			foreach($info as $k=>$v){
+				$img = $v;
+				
+				$img['tags'] = $tag;
+				if($classify){
+					$img['sc'] = 1;
+					$img['classify'] = $classify;
+				}
+
+				$res['path'] = $img['savepath'].$img['savename'];				
+				$image = new \Think\Image(); 
+				$image->open($config['rootPath'].$res['path']);
+				$image->thumb(375,1000000)->save($config['rootPath'].$img['savepath'].'s_'.$img['savename']);
+				
+				$img['thumb'] = 's_'.$img['savename'];
+				$img['time'] = time();
+				$img['dir'] = 'images/';
+				$servername = SERVER_IP.'images/';
+				$img['servername'] = $servername;
+				$img['img_url'] = $servername.$res['path'];
+				$img['thumb_url'] = $servername.$img['savepath'].'s_'.$img['savename'];
+				
+				$images = D('Common/Images');
+				$rs = $images->data($img)->add();
 			}
-			$res['path'] = $img['savepath'].$img['savename'];
-			
-			$image = new \Think\Image(); 
-			$image->open($config['rootPath'].$res['path']);
-			$image->thumb(375,1000000)->save($config['rootPath'].$img['savepath'].'s_'.$img['savename']);
-			
-			$img['thumb'] = 's_'.$img['savename'];
-			$img['time'] = time();
-			$img['dir'] = 'images/';
-			$servername = 'http://121.42.157.21/images/';
-			$img['servername'] = $servername;
-			$img['img_url'] = $servername.$res['path'];
-			$img['thumb_url'] = $servername.$img['savepath'].'s_'.$img['savename'];
-			
-			$images = D('Common/Images');
-			$rs = $images->data($img)->add();
 			if($rs){
 				$this->success('Success');
 			}
