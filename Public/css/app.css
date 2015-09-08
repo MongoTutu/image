@@ -36,6 +36,9 @@ input{font-family: inherit;}
 .sc{margin-top: 5px;}
 .sc a{display: inline-block;margin-bottom: 5px;line-height: 20px;}
 
+.edit{}
+.edit a{background: #454545;color: #FFF;display: inline-block;width: 60px;height: 22px;line-height: 22px;text-align: center;border-radius: 3px;}
+
 .page{text-align: center;margin: 20px 0;}
 .page a{color: #FFF;background: #127ac3;padding: 5px 15px;margin: 0 5px;}
 .page span{color: #FFF;background: #888;padding: 5px 15px;margin: 0 5px;}

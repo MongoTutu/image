@@ -36,6 +36,9 @@
 							<a href="javascript:;" data-clipboard-text="{$v._id|strtoupper}" class="copy">复制KEY</a>
 							<input type="text" value="{$v._id|strtoupper}">
 						</div>
+						<div class="edit">
+							<a href="{:U('edit',array('id'=>$v['_id']))}">edit</a>
+						</div>
 					</div>
 				</div>
 				</volist>				

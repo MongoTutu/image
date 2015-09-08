@@ -22,6 +22,33 @@ class IndexController extends Controller {
 		$this->display();
 	}
 
+	public function edit(){
+		$id = I('id');
+		$this->data = D('Common/Images')->where(array('_id'=>$id))->find();
+		$this->tags = $this->gettags();
+		$this->display();
+	}
+
+	public function edit_images(){
+		$id = I('id');
+		$tag = I('tags');
+		$tags = multi_explode(array(',','，'),$tag);
+		$classify = I('classify');
+		if($classify){
+			$data['classify'] = $classify;
+			$data['sc'] = 1;
+		}else{
+			$data['sc'] = 0;
+		}
+		$data['tags'] = $tags;
+		$res = D('Common/Images')->where(array('_id'=>$id))->data($data)->save();
+		if($res){
+			$this->success('Success');
+		}else{
+			$this->error('Error');
+		}
+	}
+
 	public function image(){
 		$p = I('p') ? intval(I('p')) : 1;
 		$limit = 30;
@@ -47,6 +74,7 @@ class IndexController extends Controller {
 		}
 		dump($data);
 	}
+
 
 	public function gettags(){
 		$tags = D('Common/Images')->field('tags')->select();

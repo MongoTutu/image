@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content ="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="blank">
+<meta name="format-detection" content="telephone=no">
+<title>Images</title>
+<link rel="stylesheet" href="__PUBLIC__/css/app.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/jquery-tagsinput/1.3.3/jquery.tagsinput.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<include file="header" />
+
+	<div class="article">
+		<div class="wraper">
+			<form action="{:U('edit_images')}" method="post" >
+			<div class="form-group">
+				<input name="tags" id="tags" value="{$data.tags|implode=', ',###}" style="width: 60%;height:30px;padding-left:5px;" placeholder="标签 （用逗号分隔）">
+			</div>
+			<div class="form-group">
+				<input type="text" name="classify" style="width: 60%;height:30px;padding-left:5px;" placeholder="分类名（用于素材类别区分）" id="classify" value="{$data.classify}">
+				<div class="sc">
+					<a class="tags" href="javascript:;">医疗保健</a>
+					<a class="tags" href="javascript:;">非必需消费品</a>
+					<a class="tags" href="javascript:;">生物科技</a>
+					<a class="tags" href="javascript:;">商品</a>
+					<a class="tags" href="javascript:;">金融</a>
+					<a class="tags" href="javascript:;">电信服务</a>
+					<a class="tags" href="javascript:;">商业及专业服务</a>
+					<a class="tags" href="javascript:;">清洁技术</a>
+					<a class="tags" href="javascript:;">通信</a>
+					<a class="tags" href="javascript:;">互联网</a>
+					<a class="tags" href="javascript:;">IT和企业软件</a>
+					<a class="tags" href="javascript:;">生命科学</a>
+					<a class="tags" href="javascript:;">半导体</a>
+					<a class="tags" href="javascript:;">杂项技术</a>
+					<a class="tags" href="javascript:;">公用事业</a>
+					<a class="tags" href="javascript:;">其他</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<img src="{$data.thumb_url}" alt="">
+			</div>
+			<input type="hidden" name="id" value="{$data._id}">
+			<div class="form-group">
+				<input class="submitBtn" type="submit" value="提交">
+			</div>
+			</form>
+		</div>
+	</div>
+
+
+</body>
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/jquery-tagsinput/1.3.3/jquery.tagsinput.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	/*$('#tags').tagsInput({
+		'height':'64px',
+		'width':'100%',
+		'interactive':true,
+		'defaultText':'输入标签',
+		'removeWithBackspace' : true,
+		'placeholderColor' : '#666666'
+	});*/
+	$('.sc a').on('click',function(){
+		var t = $(this).text();
+		$('#classify').val(t);
+	})
+});
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/require.js" data-main="__PUBLIC__/js/main"></script>
+</html>
