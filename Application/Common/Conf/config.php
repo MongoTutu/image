@@ -1,7 +1,7 @@
 <?php
 return array(
 	'DB_TYPE'			=>	'mongo',
-	'DB_HOST'			=>	'127.0.0.1',
+	'DB_HOST'			=>	MONGO_SERVER,
 	'DB_NAME'			=>	'kadmin',
 	'DB_USER'			=>	'',
 	'DB_PWD'			=>	'',
