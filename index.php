@@ -1,18 +1,13 @@
 <?php
-$img_server = '127.0.0.1';
-// $img_server = '101.230.201.244';
-// $img_server = '121.42.157.21';
-// $img_server = '203.81.28.218';
-$mongo_server = '127.0.0.1';
-// $mongo_server = '10.166.210.7';
 
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
 define('APP_DEBUG',true);
-
-define('SERVER_IP', 'http://'.$img_server.'/');
-define('MONGO_SERVER', $mongo_server);
-
 define('APP_PATH','./Application/');
+
+define('COMMON_PATH', dirname(dirname(__FILE__)).'/Common/'); // 应用公共目录
+$server_ip = require COMMON_PATH.'ip.php';
+define('IMAGES', $server_ip['img_server']);
+define('MONGO_SERVER', $server_ip['db_server']);
 
 require './ThinkPHP/ThinkPHP.php';
