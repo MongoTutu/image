@@ -1,6 +1,6 @@
 <?php
 $img_server = '127.0.0.1';
-// $img_server = '58.32.236.76';
+// $img_server = '101.230.201.244';
 // $img_server = '121.42.157.21';
 // $img_server = '203.81.28.218';
 $mongo_server = '127.0.0.1';
