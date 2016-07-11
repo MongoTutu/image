@@ -6,7 +6,7 @@ class IndexController extends Controller {
 	public function _initialize(){
 		$cookieid = cookie('img_id');
 		if(!$cookieid){
-			$this->redirect('Index/index');
+			$this->redirect('User/index');
 		}
 		$ex = D('Common/User')->where(array('_id'=>$cookieid,'username'=>cookie('username')))->find();
 		if(!$ex){
