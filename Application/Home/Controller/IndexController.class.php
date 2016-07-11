@@ -2,7 +2,18 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
-	
+
+	public function _initialize(){
+		$cookieid = cookie('img_id');
+		if(!$cookieid){
+			$this->redirect('Index/index');
+		}
+		$ex = D('Common/User')->where(array('_id'=>$cookieid,'username'=>cookie('username')))->find();
+		if(!$ex){
+			$this->redirect('User/logout');
+		}
+	}
+
 	public function index(){
 		$tag = I('tag');
 		$p = I('p') ? intval(I('p')) : 1;
@@ -128,21 +139,21 @@ class IndexController extends Controller {
 			$this->error($upload->getError());
 		}else{
 			$tag = multi_explode(array(',','，'),$t);
-	
+
 			foreach($info as $k=>$v){
 				$img = $v;
-				
+
 				$img['tags'] = $tag;
 				if($classify){
 					$img['sc'] = 1;
 					$img['classify'] = $classify;
 				}
 
-				$res['path'] = $img['savepath'].$img['savename'];				
-				$image = new \Think\Image(); 
+				$res['path'] = $img['savepath'].$img['savename'];
+				$image = new \Think\Image();
 				$image->open($config['rootPath'].$res['path']);
 				$image->thumb(375,1000000)->save($config['rootPath'].$img['savepath'].'s_'.$img['savename']);
-				
+
 				$img['thumb'] = 's_'.$img['savename'];
 				$img['time'] = time();
 				$img['dir'] = 'images/';
@@ -150,7 +161,7 @@ class IndexController extends Controller {
 				$img['servername'] = $servername;
 				$img['img_url'] = $servername.$res['path'];
 				$img['thumb_url'] = $servername.$img['savepath'].'s_'.$img['savename'];
-				
+
 				$images = D('Common/Images');
 				$rs = $images->data($img)->add();
 			}

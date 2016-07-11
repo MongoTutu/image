@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KAdmin Login</title>
+<link rel="stylesheet" href="__PUBLIC__/css/reset.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<style type="text/css">
+body{background: #F0F0F0;}
+.login{
+	width: 320px;height: 360px;margin: 100px auto 0;
+	background: #FDFDFD;border-radius: 6px;
+	box-shadow: 0 0 4px 0 #CCC;
+}
+.lh{text-align: center;font-size: 32px;color: #CCC;font-weight: 700;padding: 35px;}
+.lh i{font-size: 28px;}
+.main{width: 80%;margin: 0 auto;}
+.main input{width: 93%;border: 1px solid #d0cfcf;height: 28px;padding: 0 5px;line-height: 28px;border-radius: 3px;}
+.fmx{margin-bottom: 25px;position: relative;}
+.fmx i{font-size: 20px;position: absolute;color: #AAA;top: 5px;right:15px;}
+.submit{text-align: right;}
+.submit input{background: #37AABF;width: 90px;height: 30px;border: none;color: #FFF;border-radius: 3px;margin-right: 40px;}
+.lb{text-align: center;margin-top: 40px;color: #AAA;}
+</style>
+</head>
+<body>
+	<div class="login">
+		<div class="lh">
+			<i class="fa fa-th-list"></i> KAdmin
+		</div>
+		<form action="{:U('login')}" method="post">
+		<div class="main">
+			<div class="fmx">
+				<input type="text" name="phone" placeholder="手机号">
+				<i class="fa fa-phone-square"></i>
+			</div>
+			<div class="fmx">
+				<input type="password" name="password" placeholder="密码">
+				<i class="fa fa-lock"></i>
+			</div>
+		</div>
+		<div class="submit">
+			<input type="submit" value="Submit">
+		</div>
+		</form>
+		<div class="lb">
+			@ Only For KStart Admin User
+		</div>		
+	</div>
+</body>
+</html>
